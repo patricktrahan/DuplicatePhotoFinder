@@ -32,3 +32,21 @@ Duplicate Photo Finder is a simple desktop app built with **Python** and **Tkint
 
 3. Run the app:
 python DuplicatePhotoFinder.py
+
+🖥️ Usage
+
+Launch the program.
+Click Select Folder to choose the directory you want to scan.
+Click Scan for Duplicates.
+Select a duplicate group from the list to preview images.
+Check the images you want to delete (or leave unchecked to keep the first one and delete the rest).
+Click Delete Selected to clean up duplicates.
+
+⚠️ Disclaimer
+This tool permanently deletes files. Be careful when selecting files to remove. It is recommended to back up your data before running bulk deletions.
+
+🛠️ Tech Stack
+Python 3
+Tkinter (UI)
+Pillow (PIL) (image handling)
+hashlib (MD5 hashing for duplicate detection)
