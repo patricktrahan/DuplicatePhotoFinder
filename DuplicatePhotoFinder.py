@@ -1,5 +1,7 @@
 from doctest import master
 import os
+import sys
+from send2trash import send2trash
 import hashlib
 from tkinter import Tk, filedialog, PhotoImage
 from tkinter import StringVar
@@ -35,6 +37,9 @@ class DuplicatePhotoFinder:
         self.scan_button = Button(master, text="Scan for Duplicates", command=self.scan_folder, state='disabled')
         self.scan_button.pack(pady=5)
 
+        self.delete_selected_button = Button(master, text="Delete Selected", command=self.delete_selected, state='disabled')
+        self.delete_selected_button.pack(pady=5)
+
         self.listbox_label = Label(master, text="Duplicate Groups:", style='Header.TLabel')
         self.listbox_label.pack(fill='x', pady=(20, 0))
 
@@ -56,8 +61,6 @@ class DuplicatePhotoFinder:
         self.preview_frame.bind('<Configure>', lambda e: self.preview_canvas.configure(scrollregion=self.preview_canvas.bbox('all')))
         self.button_frame = tkFrame(master)
         self.button_frame.pack(fill='x', pady=(20, 10))
-        self.delete_selected_button = Button(self.button_frame, text="Delete Selected", command=self.delete_selected, state='disabled')
-        self.delete_selected_button.pack(pady=10, expand=True)
 
         # Enable mouse wheel scrolling
         self.preview_canvas.bind('<MouseWheel>', self._on_mousewheel)
@@ -98,19 +101,15 @@ class DuplicatePhotoFinder:
         for root, _, files in os.walk(folder):
             for file in files:
                 path = os.path.join(root, file)
-                print(f"Found: {path}")
                 try:
                     with open(path, 'rb') as f:
                         filehash = hashlib.md5(f.read()).hexdigest()
-                    print(f"Hash: {filehash} for {path}")
                     hashes.setdefault(filehash, []).append(path)
                 except Exception as e:
                     print(f"Error reading {path}: {e}")
-        print("Hash groups:")
         for h, f in hashes.items():
             if len(f) > 1:
-                print(f"Duplicate group: {h} -> {f}")
-        return {h: f for h, f in hashes.items() if len(f) > 1}
+                return {h: f for h, f in hashes.items() if len(f) > 1}
 
     def show_images(self, event):
         selection = self.listbox.curselection()
@@ -156,6 +155,7 @@ class DuplicatePhotoFinder:
                 frame.grid(row=row, column=i, padx=5, pady=5)
             self.delete_vars.append(group_vars)
             row += 1
+
     def delete_selected(self):
         selection = self.listbox.curselection()
         if not selection:
@@ -170,10 +170,14 @@ class DuplicatePhotoFinder:
                 # Keep the first file, delete the rest
                 files_to_delete.extend([file for file, _ in group][1:])
         for file in files_to_delete:
-            try:
-                os.remove(file)
-            except Exception as e:
-                print(f"Error deleting {file}: {e}")
+                import os
+                normalized_path = os.path.normpath(file)
+                print(f"Attempting to send to recycle bin: {normalized_path}")
+                try:
+                    send2trash(normalized_path)
+                    print(f"Sent to recycle bin: {normalized_path}")
+                except Exception as e:
+                    print(f"Error sending {normalized_path} to recycle bin: {e}")
         if hasattr(self, 'preview_frame'):
             for widget in self.preview_frame.winfo_children():
                 widget.destroy()
@@ -183,11 +187,11 @@ class DuplicatePhotoFinder:
 
     def delete_file(self, file, window):
         try:
-            os.remove(file)
+            send2trash(file)
             window.destroy()
             self.scan_folder()
         except Exception as e:
-            print(f"Error deleting {file}: {e}")
+            print(f"Error sending {file} to recycle bin: {e}")
 
 if __name__ == "__main__":
     root = Tk()

@@ -43,7 +43,7 @@ Check the images you want to delete (or leave unchecked to keep the first one an
 Click Delete Selected to clean up duplicates.
 
 ⚠️ Disclaimer
-This tool permanently deletes files. Be careful when selecting files to remove. It is recommended to back up your data before running bulk deletions.
+This tool now sends files to the recycle bin rather than permanently deleting.
 
 🛠️ Tech Stack
 Python 3
