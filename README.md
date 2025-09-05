@@ -1,9 +1,9 @@
 
-<h1># 📷 Duplicate Photo Finder</h1>
+<h1>📷 Duplicate Photo Finder</h1>
 
 <h3>Duplicate Photo Finder is a simple desktop app built with **Python** and **Tkinter** that scans a folder for duplicate image files using file hashing. It provides an easy-to-use interface to preview duplicates and delete unwanted files.</h2>
 
-<h2>## ✨ Features</h2>
+<h2>✨ Features</h2>
    <ul>
       <li>Select a folder and scan for duplicate images</li>
       <li>Uses **MD5 hashing** to detect identical files</li>
@@ -14,7 +14,7 @@
       <li>Clean UI styled with **Tkinter ttk + PIL**</li>
    </ul>
 
-<h2>## 📸 Screenshots</h2>
+<h2>📸 Screenshots</h2>
 
 <h2>🖥️ Usage</h2>
    <ul>
