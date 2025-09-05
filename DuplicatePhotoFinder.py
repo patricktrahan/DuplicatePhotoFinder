@@ -50,7 +50,6 @@ class DuplicatePhotoFinder:
         self.preview_label = Label(master, text="Preview & Select Files to Delete:", style='Header.TLabel')
         self.preview_label.pack(fill='x', pady=(20, 0))
 
-    
         self.preview_canvas = Canvas(master, height=500, bg='#f5f5f5', highlightthickness=0)
         self.preview_scrollbar = Scrollbar(master, orient='vertical', command=self.preview_canvas.yview)
         self.preview_canvas.configure(yscrollcommand=self.preview_scrollbar.set)
@@ -67,9 +66,6 @@ class DuplicatePhotoFinder:
 
     def _on_mousewheel(self, event):
         self.preview_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
-
-
-
         self.folder_path = None
         self.duplicates = {}
 
