@@ -16,7 +16,7 @@
 
 <h2>📸 Screenshots</h2>
 
-<a href="https://github.com/patricktrahan/DuplicatePhotoFinder/blob/main/media/Duplicate%20photo%20finder%20screenshot%20001.jpg"></a>
+<img src="https://github.com/patricktrahan/DuplicatePhotoFinder/blob/main/media/Duplicate%20photo%20finder%20screenshot%20001.jpg"/>
 
 <h2>🖥️ Usage</h2>
    <ul>
